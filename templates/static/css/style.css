@@ -1,0 +1,79 @@
+html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+body {
+    display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+}
+
+main {
+      flex: 1;
+}
+
+.navbar {
+      background-color: black;
+}
+
+.navbar .nav-link {
+      color: orange;
+}
+
+.navbar .navbar-brand {
+      color: orange;
+}
+
+.navbar-toggler {
+  border-color: orange;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='orange' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+
+
+/* Footer in the base.html style */
+.main_footer {
+      background-color: black;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 56px;
+      padding: 0 20px; 
+      box-sizing: border-box;
+}
+
+.footer_content {
+      display: flex;
+      justify-content: space-between; 
+      align-items: center;
+      height: 100%;
+      width: 100%;     
+}
+
+.footer_nav {
+       position: absolute;  
+      left: 50%;         
+      top: 50%; 
+      transform: translate(-50%, -50%); 
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0 auto; 
+      gap: 30px
+}
+
+.footer_nav li a {
+      color: orange;
+      font-size: 1.5rem;
+      text-decoration: none;
+}
+
+.footer_nav li a:hover {
+      color: white;
+}
+
