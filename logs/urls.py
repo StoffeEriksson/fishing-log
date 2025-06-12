@@ -1,7 +1,8 @@
 from django.urls import path
-from . import views
+from .views import home_or_dashboard, dashboard, log_fish_session
 
 urlpatterns = [
-    path('', views.log_list, name='log_list'),
-    path('log/', views.log_fish_session, name='log_fish'),
+    path('', home_or_dashboard, name='home'),
+    path('dashboard/', dashboard, name='dashboard'),
+    path('log/', log_fish_session, name='log_fish'),
 ]
