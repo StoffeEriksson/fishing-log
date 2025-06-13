@@ -25,7 +25,9 @@ def dashboard(request):
     return render(request, 'logs/dashboard.html', {'logs': logs, 'total': total})
 
 
-def home_or_dashboard(request):
-    if request.user.is_authenticated:
-        return dashboard(request)  # visar dashboard.html
-    return render(request, 'logs/home.html')  # visar home.html
+def home(request):
+    return render(request, 'logs/home.html')
+
+@login_required
+def dashboard(request):
+    return render(request, 'logs/dashboard.html')
