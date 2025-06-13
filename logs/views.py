@@ -6,6 +6,7 @@ from .forms import FishLogForm
 # Create your views here.
 @login_required
 def log_fish_session(request):
+    """ alskdmal """
     if request.method == 'POST':
         form = FishLogForm(request.POST)
         if form.is_valid():
@@ -15,7 +16,7 @@ def log_fish_session(request):
             return redirect('dashboard')
     else:
         form = FishLogForm()
-    return render(request, 'logs/log_form.html', {'form': form})
+    return render(request, 'logs/log_forms.html', {'form': form})
 
 @login_required
 def dashboard(request):
