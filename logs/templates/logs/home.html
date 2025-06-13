@@ -1,8 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="text-center">
-  <h1>Välkommen till Fishing Log!</h1>
+<div class="container">
+  <div>
+     <h1 class="hero_text">Welcome toFishing Log!</h1>
+     <div class="sub_text">
+      <h2>Track your fishing sessions!</h2>
+      <h2>View your logged data!</h2>
+      <h2>See your pregress!</h2>
+  </div>
+ <h2>New to fishing log?</h2>
   <p class="lead">Logga dina fiskepass och följ din statistik.</p>
   <a href="{% url 'account_signup' %}" class="btn btn-primary m-2">Skapa konto</a>
   <a href="{% url 'account_login' %}" class="btn btn-secondary m-2">Logga in</a>
