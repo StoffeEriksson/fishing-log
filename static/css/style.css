@@ -160,3 +160,52 @@ h2 {
 .btn-orange:hover {
   background-color: orange !important;
 }
+
+/* Login.html */
+
+.login-wrapper {
+  min-height: calc(100vh - 56px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.login-card {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  color: white;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.login-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.login-sub {
+  margin-bottom: 2rem;
+  font-style: italic;
+  color: #f0f0f0;
+}
+
+.btn-orange {
+  background-color: orange;
+  color: white;
+  border: 2px solid orange;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-orange:hover {
+  background-color: darkorange;
+  border-color: darkorange;
+  color: white;
+}
