@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard">
+  <div class="dashboard-section">
+    <h2>Session Analysis</h2>
+    {% if last_session %}
+      <p><strong>Date:</strong> {{ last_session.date }}</p>
+      <p><strong>Location:</strong> {{ last_session.location }}</p>
+      <p><strong>Total Fish:</strong> {{ last_session.total_fish }}</p>
+    {% else %}
+      <p>No recent session found.</p>
+    {% endif %}
+    <a href="{% url 'session_list' %}" class="btn btn-orange mt-3">Back to all sessions</a>
+  </div>
+</div>
+{% endblock %}

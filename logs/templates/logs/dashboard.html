@@ -1,22 +1,22 @@
 {% extends "base.html" %}
-
 {% block content %}
-  <div class="container">
-    <h2>Hej {{ user.username }}!</h2>
-    <p>Totalt antal fiskar: <strong>{{ total }}</strong></p>
-
-    <a href="{% url 'log_fish' %}" class="btn btn-success mb-3">Logga nytt fiskepass</a>
-
-    <h4>Dina senaste loggar:</h4>
-    <ul class="list-group">
-      {% for log in logs %}
-        <li class="list-group-item">
-          {{ log.date }} – {{ log.location }} – {{ log.fish_count }} fiskar
-        </li>
-      {% empty %}
-        <li class="list-group-item">Inga loggar ännu.</li>
-      {% endfor %}
-    </ul>
+<div class="dashboard">
+  <div class="dashboard-section">
+    <h2>Log a new Fishing Session</h2>
+    <p>Start recording a new trip</p>
+    <a href="{% url 'log_fish' %}" class="btn btn-orange">Log a session</a>
   </div>
-{% endblock %}
 
+  <div class="dashboard-section">
+    <h2>View your Sessions</h2>
+    <p>See all your recorded sessions</p>
+    <a href="{% url 'session_list' %}" class="btn btn-orange">View sessions</a>
+  </div>
+
+  <div class="dashboard-section">
+    <h2>Your recent session</h2>
+    <p>Your session from {{ last_session.date|default:"No sessions yet." }}</p>
+    <a href="{% url 'session_stats' %}" class="btn btn-orange">View session analysis</a>
+  </div>
+</div>
+{% endblock %}
