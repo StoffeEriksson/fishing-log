@@ -233,3 +233,63 @@ h2 {
   opacity: 1;
   transition: opacity 0.5s ease-out;
 }
+
+/* Dashboard.html page */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+  padding: 4rem 1rem;
+}
+
+.dashboard-section {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard-section p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-orange {
+  background-color: orange;
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-orange:hover {
+  background-color: darkorange;
+}
+
+/* session_list */
+.session-list {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.session-list li {
+  padding: 0.75rem;
+  background-color: rgba(255,255,255,0.05);
+  margin-bottom: 0.5rem;
+  border-left: 4px solid orange;
+  border-radius: 6px;
+}
