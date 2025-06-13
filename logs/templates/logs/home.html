@@ -1,17 +1,39 @@
 {% extends "base.html" %}
+{% load static %}
+
+ <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
 {% block content %}
-<div class="container">
-  <div>
-     <h1 class="hero_text">Welcome toFishing Log!</h1>
-     <div class="sub_text">
-      <h2>Track your fishing sessions!</h2>
-      <h2>View your logged data!</h2>
-      <h2>See your pregress!</h2>
+<div class="custom_container">
+  <div class="card_content">
+    <h1 class="hero_text">Welcome to Fishing Log!</h1>
+    <div class="sub_text">
+      <h2>Log your fishing trips</h2>
+      <h2>Follow your statistics</h2>
+      <h2>View your progress</h2>
+    </div>
   </div>
- <h2>New to fishing log?</h2>
-  <p class="lead">Logga dina fiskepass och följ din statistik.</p>
-  <a href="{% url 'account_signup' %}" class="btn btn-primary m-2">Skapa konto</a>
-  <a href="{% url 'account_login' %}" class="btn btn-secondary m-2">Logga in</a>
+
+  <div class="card_content">
+    <h2>New to Fishing Log?</h2>
+    <div class="card_link">
+      <ul>
+        <li>
+          <a href="{% url 'account_signup' %}" class="btn btn-orange m-2">Create Account</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card_content" id="bottom_card">
+    <h2>Already have an account?</h2>
+    <div class="card_link">
+      <ul>
+        <li>
+          <a href="{% url 'account_login' %}" class="btn btn-orange m-2">Login to your account</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
 {% endblock %}
