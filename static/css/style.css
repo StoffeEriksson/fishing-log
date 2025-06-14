@@ -300,6 +300,7 @@ h2 {
   justify-content: center;
   align-items: center;
   min-height: 70vh;
+  margin-bottom: 120px;
 }
 
 .card-content {
@@ -362,3 +363,25 @@ h2 {
 .btn-orange:hover {
   background-color: darkorange;
 } 
+
+.faded-catch {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-left: 4px solid orange;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.faded-catch button.remove-catch {
+  background: none;
+  border: none;
+  color: orange;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.faded-catch button.remove-catch:hover {
+  color: red;
+}
