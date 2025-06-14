@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
+from django.utils.safestring import mark_safe
+import json
 from .models import FishingSession, Catch
 from .forms import FishingSessionForm, CatchFormSet
 
@@ -54,7 +57,23 @@ def log_fish_session(request):
 @login_required
 def session_list(request):
     sessions = FishingSession.objects.filter(user=request.user).order_by('-date')
-    return render(request, 'logs/session_list.html', {'sessions': sessions})
+
+    # Summera fångster per art
+    species_data = (
+        Catch.objects
+        .filter(session__user=request.user)
+        .values('species')
+        .annotate(total=Sum('count'))
+        .order_by('species')
+    )
+    labels = [entry['species'].title() for entry in species_data]
+    counts = [entry['total'] for entry in species_data]
+
+    return render(request, 'logs/session_list.html', {
+        'sessions': sessions,
+        'species_labels': mark_safe(json.dumps(labels)),
+        'species_counts': mark_safe(json.dumps(counts)),
+    })
 
 # Statistik för senaste passet
 @login_required
