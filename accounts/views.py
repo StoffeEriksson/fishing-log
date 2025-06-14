@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
@@ -6,7 +7,8 @@ from django.shortcuts import render, redirect
 @login_required
 def delete_account(request):
     if request.method == 'POST':
-        request.user.delete()
-        messages.success(request, "Your account has been deleted.")
-        return redirect('home')
-    return render(request, 'accounts/delete_account.html')
+        user = request.user
+        logout(request)
+        user.delete()
+        return redirect('home') 
+    return render(request, 'logs/delete_account.html')
