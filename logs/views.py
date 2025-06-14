@@ -1,46 +1,63 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import FishLog
-from .forms import FishLogForm
-
-# Log a fish session
-@login_required
-def log_fish_session(request):
-    if request.method == 'POST':
-        form = FishLogForm(request.POST)
-        if form.is_valid():
-            log = form.save(commit=False)
-            log.user = request.user
-            log.save()
-            return redirect('dashboard')
-    else:
-        form = FishLogForm()
-    return render(request, 'logs/log_forms.html', {'form': form})
-
-# Dashboard
-@login_required
-def dashboard(request):
-    logs = FishLog.objects.filter(user=request.user).order_by('-date')
-    total = sum(log.fish_count for log in logs)
-    last_session = logs.first()  # Assuming most recent
-    return render(request, 'logs/dashboard.html', {
-        'logs': logs,
-        'total': total,
-        'last_session': last_session
-    })
+from .models import FishingSession, Catch
+from .forms import FishingSessionForm, CatchFormSet
 
 # Home page
 def home(request):
     return render(request, 'logs/home.html')
 
-# Session list
+# Dashboard – visar senaste pass och total fångst
+@login_required
+def dashboard(request):
+    sessions = FishingSession.objects.filter(user=request.user).order_by('-date')
+    total_fish = sum(
+        catch.count for session in sessions for catch in session.catches.all()
+    )
+    last_session = sessions.first()
+
+    return render(request, 'logs/dashboard.html', {
+        'sessions': sessions,
+        'total': total_fish,
+        'last_session': last_session
+    })
+
+# Logga nytt fiskepass med flera arter
+@login_required
+def log_fish_session(request):
+    if request.method == 'POST':
+        session_form = FishingSessionForm(request.POST)
+        formset = CatchFormSet(request.POST, queryset=Catch.objects.none())
+
+        if session_form.is_valid() and formset.is_valid():
+            session = session_form.save(commit=False)
+            session.user = request.user
+            session.save()
+
+            for form in formset:
+                if form.cleaned_data and not form.cleaned_data.get('DELETE', False):
+                    catch = form.save(commit=False)
+                    catch.session = session
+                    catch.save()
+
+            return redirect('dashboard')
+    else:
+        session_form = FishingSessionForm()
+        formset = CatchFormSet(queryset=Catch.objects.none())
+
+    return render(request, 'logs/log_fishing_session.html', {
+        'session_form': session_form,
+        'formset': formset,
+    })
+
+# Lista alla sessioner
 @login_required
 def session_list(request):
-    sessions = FishLog.objects.filter(user=request.user).order_by('-date')
+    sessions = FishingSession.objects.filter(user=request.user).order_by('-date')
     return render(request, 'logs/session_list.html', {'sessions': sessions})
 
-# Session stats
+# Statistik för senaste passet
 @login_required
 def session_stats(request):
-    last_session = FishLog.objects.filter(user=request.user).order_by('-date').first()
+    last_session = FishingSession.objects.filter(user=request.user).order_by('-date').first()
     return render(request, 'logs/session_stats.html', {'last_session': last_session})

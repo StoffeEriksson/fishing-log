@@ -1,9 +1,28 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-class FishLog(models.Model):
+class FishingSession(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
     location = models.CharField(max_length=100)
-    fish_count = models.PositiveIntegerField()
+    date = models.DateField()
+
+    def __str__(self):
+        return f"{self.user.username} - {self.date} at {self.location}"
+
+FISH_SPECIES_CHOICES = [
+    ('pike', 'Pike'),
+    ('perch', 'Perch'),
+    ('trout', 'Trout'),
+    ('salmon', 'Salmon'),
+    ('roach', 'Roach'),
+    ('tench', 'Tench'),
+    ('other', 'Other')
+]
+
+class Catch(models.Model):
+    session = models.ForeignKey(FishingSession, on_delete=models.CASCADE, related_name='catches')
+    species = models.CharField(max_length=50, choices=FISH_SPECIES_CHOICES)
+    count = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.species} x {self.count}"

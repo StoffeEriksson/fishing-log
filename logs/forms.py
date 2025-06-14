@@ -1,7 +1,21 @@
 from django import forms
-from .models import FishLog
+from .models import FishingSession, Catch
+from django.forms import modelformset_factory
 
-class FishLogForm(forms.ModelForm):
+class FishingSessionForm(forms.ModelForm):
     class Meta:
-        model = FishLog
-        fields = ['location', 'fish_count']
+        model = FishingSession
+        fields = ['location', 'date']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+CatchFormSet = modelformset_factory(
+    Catch,
+    fields=('species', 'count'),
+    extra=1,
+    can_delete=True,
+    widgets={
+        'count': forms.NumberInput(attrs={'min': 1}),
+    }
+)
