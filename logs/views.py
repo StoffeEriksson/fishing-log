@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
+from django.db.models import Sum, DateField
 from django.db.models.functions import TruncMonth
 from django.utils.safestring import mark_safe
-import json
+from django.contrib import messages
 from .models import FishingSession, Catch
 from .forms import FishingSessionForm, CatchFormSet
+import json
+import calendar
 
 # Home page
 def home(request):
@@ -26,12 +28,12 @@ def dashboard(request):
         'last_session': last_session
     })
 
-# Logga nytt fiskepass med flera arter
+# Logga nytt fiskepass
 @login_required
 def log_fish_session(request):
     if request.method == 'POST':
         session_form = FishingSessionForm(request.POST)
-        formset = CatchFormSet(request.POST, queryset=Catch.objects.none())
+        formset = CatchFormSet(request.POST)
 
         if session_form.is_valid() and formset.is_valid():
             session = session_form.save(commit=False)
@@ -44,7 +46,8 @@ def log_fish_session(request):
                     catch.session = session
                     catch.save()
 
-            return redirect('dashboard')
+            messages.success(request, "Fishing session has been logged successfully!")  # 👈 Lägg till detta
+            return redirect('session_stats')
     else:
         session_form = FishingSessionForm()
         formset = CatchFormSet(queryset=Catch.objects.none())
@@ -54,7 +57,7 @@ def log_fish_session(request):
         'formset': formset,
     })
 
-# Lista alla sessioner
+# Visa alla sessioner och grafer
 @login_required
 def session_list(request):
     sessions = FishingSession.objects.filter(user=request.user).order_by('-date')
@@ -70,16 +73,16 @@ def session_list(request):
     species_labels = [entry['species'].title() for entry in species_data]
     species_counts = [entry['total'] for entry in species_data]
 
-    # Fångst per månad
+    # Fångst per månad (fixat!)
     monthly_data = (
         Catch.objects
         .filter(session__user=request.user)
-        .annotate(month=TruncMonth('session__date'))
+        .annotate(month=TruncMonth('session__date', output_field=DateField()))
         .values('month')
         .annotate(total=Sum('count'))
         .order_by('month')
     )
-    month_labels = [entry['month'].strftime('%b %Y') for entry in monthly_data]
+    month_labels = [calendar.month_name[entry['month'].month] for entry in monthly_data]
     month_counts = [entry['total'] for entry in monthly_data]
 
     return render(request, 'logs/session_list.html', {
@@ -93,5 +96,18 @@ def session_list(request):
 # Statistik för senaste passet
 @login_required
 def session_stats(request):
-    last_session = FishingSession.objects.filter(user=request.user).order_by('-date').first()
-    return render(request, 'logs/session_stats.html', {'last_session': last_session})
+    last_session = FishingSession.objects.filter(user=request.user).order_by('-id').first()
+    catches = last_session.catches.all() if last_session else []
+    total = sum(c.count for c in catches) if last_session else 0
+
+    return render(request, 'logs/session_stats.html', {
+        'last_session': last_session,
+        'catches': catches,
+        'total': total
+    })
+
+# Nollställ statistik
+@login_required
+def reset_stats(request):
+    FishingSession.objects.filter(user=request.user).delete()
+    return redirect('dashboard')

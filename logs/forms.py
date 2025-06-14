@@ -15,7 +15,5 @@ CatchFormSet = modelformset_factory(
     fields=('species', 'count'),
     extra=1,
     can_delete=True,
-    widgets={
-        'count': forms.NumberInput(attrs={'min': 1}),
-    }
+    
 )
