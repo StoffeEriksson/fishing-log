@@ -111,3 +111,13 @@ def session_stats(request):
 def reset_stats(request):
     FishingSession.objects.filter(user=request.user).delete()
     return redirect('dashboard')
+
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        user = request.user
+        logout(request)
+        user.delete()
+        return redirect('home')  # eller annan sida du vill skicka till efter radering
+    return render(request, 'logs/delete_account.html')
