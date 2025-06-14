@@ -1,8 +1,11 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block content %}
+{% extends "base.html" %} {% load static %} {% block content %}
 <div class="custom_container">
+  <div class="text-center my-4">
+    <a href="{% url 'dashboard' %}" class="btn btn-orange"
+      >← Back to Dashboard</a
+    >
+  </div>
+
   <div class="card_content">
     <h2 class="mb-4">Log a Fishing Session</h2>
 
@@ -11,50 +14,61 @@
 
       <!-- Session form -->
       <div class="form-group mb-3">
-        <label for="id_location">Location</label>
+        <label for="{{ session_form.location.id_for_label }}">Location</label>
         {{ session_form.location }}
       </div>
 
       <div class="form-group mb-4">
-        <label for="id_date">Date</label>
+        <label for="{{ session_form.date.id_for_label }}">Date</label>
         {{ session_form.date }}
       </div>
 
-      <hr class="text-white">
+      <hr class="text-white" />
 
-      <!-- Catch formset -->
+      <!-- Add catch -->
       <h4 class="mb-3">Add Fish Catches</h4>
-      {{ formset.management_form }}
-
-      {% for form in formset %}
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <div class="form-group">
-              {{ form.species.label_tag }}
-              {{ form.species }}
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              {{ form.count.label_tag }}
-              {{ form.count }}
-            </div>
-          </div>
-          <div class="col-md-2">
-            {% if form.DELETE %}
-              <div class="form-group">
-                <label>Remove</label>
-                {{ form.DELETE }}
-              </div>
-            {% endif %}
-          </div>
+      <div class="form-row d-flex align-items-end mb-3">
+        <div class="me-2">
+          <label for="species-input">Species</label>
+          <select id="species-input" class="form-control">
+            {% for val, label in formset.empty_form.fields.species.choices %}
+            <option value="{{ val }}">{{ label }}</option>
+            {% endfor %}
+          </select>
         </div>
-      {% endfor %}
+        <div class="me-2">
+          <label for="count-input">Count</label>
+          <input
+            type="number"
+            id="count-input"
+            class="form-control"
+            min="1"
+            placeholder="Number of fish"
+          />
+        </div>
+        <button type="button" id="add-catch" class="btn btn-orange">
+          ➕ Add
+        </button>
+      </div>
 
+      <!-- Preview added catches -->
+      <div id="catch-preview" class="mb-4"></div>
+
+      <!-- Hidden formset data -->
+      <div id="catch-formset">
+        {{ formset.management_form }} {% for form in formset %}
+        <div class="d-none catch-form">{{ form.species }} {{ form.count }}</div>
+        {% endfor %}
+      </div>
+
+      <!-- Submit -->
       <div class="text-center">
         <button type="submit" class="btn btn-orange">Save Session</button>
       </div>
     </form>
   </div>
 </div>
+
+<!-- JavaScript -->
+<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

@@ -1,16 +1,35 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="dashboard">
-  <div class="dashboard-section">
-    <h2>Session Analysis</h2>
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="custom_container">
+  <div class="card_content">
+    <h2 class="mb-4">Latest Fishing Session</h2>
+
     {% if last_session %}
-      <p><strong>Date:</strong> {{ last_session.date }}</p>
-      <p><strong>Location:</strong> {{ last_session.location }}</p>
-      <p><strong>Total Fish:</strong> {{ last_session.total_fish }}</p>
+    <p><strong>Date:</strong> {{ last_session.date }}</p>
+    <p><strong>Location:</strong> {{ last_session.location }}</p>
+    <p><strong>Total caught:</strong> {{ total }} fish</p>
+
+    <hr class="text-white my-4" />
+
+    <h4 class="mb-3">Catches by species</h4>
+    <ul class="session-list">
+      {% for catch in catches %}
+      <li>
+        <strong>{{ catch.get_species_display }}</strong> – {{ catch.count }} st
+      </li>
+      {% empty %}
+      <li>No catches recorded.</li>
+      {% endfor %}
+    </ul>
     {% else %}
-      <p>No recent session found.</p>
+    <p>No sessions logged yet.</p>
     {% endif %}
-    <a href="{% url 'session_list' %}" class="btn btn-orange mt-3">Back to all sessions</a>
+
+    
+    <div class="text-center mt-4">
+      <a href="{% url 'dashboard' %}" class="btn btn-orange"
+        >← Back to Dashboard</a
+      >
+    </div>
   </div>
 </div>
 {% endblock %}
