@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
+from django.db.models.functions import TruncMonth
 from django.utils.safestring import mark_safe
 import json
 from .models import FishingSession, Catch
@@ -58,7 +59,7 @@ def log_fish_session(request):
 def session_list(request):
     sessions = FishingSession.objects.filter(user=request.user).order_by('-date')
 
-    # Summera fångster per art
+    # Fångst per art
     species_data = (
         Catch.objects
         .filter(session__user=request.user)
@@ -66,13 +67,27 @@ def session_list(request):
         .annotate(total=Sum('count'))
         .order_by('species')
     )
-    labels = [entry['species'].title() for entry in species_data]
-    counts = [entry['total'] for entry in species_data]
+    species_labels = [entry['species'].title() for entry in species_data]
+    species_counts = [entry['total'] for entry in species_data]
+
+    # Fångst per månad
+    monthly_data = (
+        Catch.objects
+        .filter(session__user=request.user)
+        .annotate(month=TruncMonth('session__date'))
+        .values('month')
+        .annotate(total=Sum('count'))
+        .order_by('month')
+    )
+    month_labels = [entry['month'].strftime('%b %Y') for entry in monthly_data]
+    month_counts = [entry['total'] for entry in monthly_data]
 
     return render(request, 'logs/session_list.html', {
         'sessions': sessions,
-        'species_labels': mark_safe(json.dumps(labels)),
-        'species_counts': mark_safe(json.dumps(counts)),
+        'species_labels': mark_safe(json.dumps(species_labels)),
+        'species_counts': mark_safe(json.dumps(species_counts)),
+        'month_labels': mark_safe(json.dumps(month_labels)),
+        'month_counts': mark_safe(json.dumps(month_counts)),
     })
 
 # Statistik för senaste passet

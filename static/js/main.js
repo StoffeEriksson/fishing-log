@@ -64,3 +64,52 @@ document.addEventListener('DOMContentLoaded', function () {
         drawCatchChart(window.speciesLabels, window.speciesCounts);
     }
 });
+
+// Monthly data chart
+function drawMonthChart(labels, data) {
+    const ctx = document.getElementById('monthChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Fångst per månad',
+                data: data,
+                fill: true,
+                backgroundColor: 'rgba(255,165,0,0.2)',
+                borderColor: 'orange',
+                tension: 0.3
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1,
+                        precision: 0,
+                        color: '#fff'
+                    },
+                    grid: {
+                        color: 'rgba(255,255,255,0.2)'
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#fff'
+                    },
+                    grid: {
+                        color: 'rgba(255,255,255,0.2)'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#fff'
+                    }
+                }
+            }
+        }
+    });
+}

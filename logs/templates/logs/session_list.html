@@ -1,41 +1,48 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <div class="dashboard">
   <div class="dashboard-section">
     <h2>Your Fishing Sessions</h2>
     <ul class="session-list">
       {% for session in sessions %}
-        <li>
-          <strong>{{ session.date }}</strong> – {{ session.location }}
-          <ul>
-            {% for catch in session.catches.all %}
-              <li>{{ catch.species|title }}: {{ catch.count }}</li>
-            {% endfor %}
-          </ul>
-        </li>
+      <li>
+        <strong>{{ session.date }}</strong> – {{ session.location }}
+        <ul>
+          {% for catch in session.catches.all %}
+          <li>{{ catch.species|title }}: {{ catch.count }}</li>
+          {% endfor %}
+        </ul>
+      </li>
       {% empty %}
-        <li>No sessions logged yet.</li>
+      <li>No sessions logged yet.</li>
       {% endfor %}
     </ul>
   </div>
-
   <div class="dashboard-section">
     <h2>Total Catch per Species</h2>
-    <canvas id="catchChart" width="400" height="300"></canvas>
+    <canvas id="catchChart" width="400" height="200"></canvas>
   </div>
+
+  <div class="dashboard-section">
+    <h2>Catch per Month</h2>
+    <canvas id="monthChart" width="400" height="200"></canvas>
+  </div>
+
+  <!-- Länka till Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+  
+  <script>
+    const speciesLabels = {{ species_labels|safe }};
+    const speciesCounts = {{ species_counts|safe }};
+    const monthLabels = {{ month_labels|safe }};
+    const monthCounts = {{ month_counts|safe }};
+
+    drawCatchChart(speciesLabels, speciesCounts);
+    drawMonthChart(monthLabels, monthCounts);
+
+  </script>
+  
 </div>
-
-<!-- Länka till Chart.js CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{% static 'js/main.js' %}"></script>
-<script>
-  const speciesLabels = {{ species_labels|safe }};
-  const speciesCounts = {{ species_counts|safe }};
-  drawCatchChart(speciesLabels, speciesCounts);
-</script>
 {% endblock %}
-
