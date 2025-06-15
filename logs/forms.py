@@ -2,6 +2,7 @@ from django import forms
 from .models import FishingSession, Catch
 from django.forms import modelformset_factory
 
+
 class FishingSessionForm(forms.ModelForm):
     class Meta:
         model = FishingSession

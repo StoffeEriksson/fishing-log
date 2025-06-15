@@ -13,7 +13,7 @@ import calendar
 def home(request):
     return render(request, 'logs/home.html')
 
-# Dashboard – visar senaste pass och total fångst
+# Dashboard shows recent session and total of fish catch
 @login_required
 def dashboard(request):
     sessions = FishingSession.objects.filter(user=request.user).order_by('-date')
@@ -28,7 +28,7 @@ def dashboard(request):
         'last_session': last_session
     })
 
-# Logga nytt fiskepass
+# Log new fishing session
 @login_required
 def log_fish_session(request):
     if request.method == 'POST':
@@ -46,7 +46,7 @@ def log_fish_session(request):
                     catch.session = session
                     catch.save()
 
-            messages.success(request, "Fishing session has been logged successfully!")  # 👈 Lägg till detta
+            messages.success(request, "Fishing session has been logged successfully!") 
             return redirect('session_stats')
     else:
         session_form = FishingSessionForm()
@@ -57,12 +57,12 @@ def log_fish_session(request):
         'formset': formset,
     })
 
-# Visa alla sessioner och grafer
+# Views all sessions and graphs
 @login_required
 def session_list(request):
     sessions = FishingSession.objects.filter(user=request.user).order_by('-date')
 
-    # Fångst per art
+    # Catch per spicies
     species_data = (
         Catch.objects
         .filter(session__user=request.user)
@@ -73,7 +73,7 @@ def session_list(request):
     species_labels = [entry['species'].title() for entry in species_data]
     species_counts = [entry['total'] for entry in species_data]
 
-    # Fångst per månad (fixat!)
+    # Catch per month
     monthly_data = (
         Catch.objects
         .filter(session__user=request.user)
@@ -93,7 +93,7 @@ def session_list(request):
         'month_counts': mark_safe(json.dumps(month_counts)),
     })
 
-# Statistik för senaste passet
+# Statistic for the latest session
 @login_required
 def session_stats(request):
     last_session = FishingSession.objects.filter(user=request.user).order_by('-id').first()
@@ -106,7 +106,7 @@ def session_stats(request):
         'total': total
     })
 
-# Nollställ statistik
+# Resets statistics
 @login_required
 def reset_stats(request):
     FishingSession.objects.filter(user=request.user).delete()
@@ -119,5 +119,5 @@ def delete_account(request):
         user = request.user
         logout(request)
         user.delete()
-        return redirect('home')  # eller annan sida du vill skicka till efter radering
+        return redirect('home')  
     return render(request, 'logs/delete_account.html')

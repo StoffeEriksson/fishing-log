@@ -32,6 +32,7 @@ h2 {
   font-family: "Edu SA Hand", cursive;
 }
 
+/* Navbar syles in base.html */
 .navbar {
   background-color: black;
 }
@@ -152,17 +153,16 @@ h2 {
 
 /* Buttons */
 .btn-orange {
-  background-color: transparent;
   border: 3px solid orange !important;
   color: white !important;
 }
 
 .btn-orange:hover {
   background-color: orange !important;
+  border-color: darkorange !important;
 }
 
 /* Login.html */
-
 .login-wrapper {
   min-height: calc(100vh - 56px);
   display: flex;
@@ -194,21 +194,6 @@ h2 {
   color: #f0f0f0;
 }
 
-.btn-orange {
-  background-color: orange;
-  color: white;
-  border: 2px solid orange;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.btn-orange:hover {
-  background-color: darkorange;
-  border-color: darkorange;
-  color: white;
-}
 
 /* Costum messages */
 .custom-messages {
@@ -262,21 +247,6 @@ h2 {
 .dashboard-section p {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
-}
-
-.btn-orange {
-  background-color: orange;
-  border: none;
-  color: white;
-  font-weight: bold;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-}
-
-.btn-orange:hover {
-  background-color: darkorange;
 }
 
 /* session_list */
@@ -349,20 +319,7 @@ h2 {
   margin-bottom: 1.5rem;
 }
 
-.btn-orange {
-  background-color: orange;
-  color: black;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
 
-.btn-orange:hover {
-  background-color: darkorange;
-} 
 
 .faded-catch {
   background-color: rgba(255, 255, 255, 0.1);
