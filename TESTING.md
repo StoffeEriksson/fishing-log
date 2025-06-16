@@ -40,17 +40,10 @@ My CSS code passed validation with no errors
 
 #### HTML validation <a name="html-validation"></a>
 
-My HTML code has a number of errors as seen below, these were due to a number of trailing slashes, br elements being used in lists and an unclosed div.
+My HTML code has a number of errors as seen below
 
-![HTML validation before 1](/climbing_log/static/images/html_validation.jpg)
 
-![HTML validation before 2](/climbing_log/static/images/html_validation1.jpg)
-
-![HTML validation before 3](/climbing_log/static/images/html_validation2.jpg)
-
-I rectified all these issues and my code passed as can be seen below
-
-![HTML validation after](/climbing_log/static/images/html_validation_pass.jpg)
+![HTML validation after](/static/images/html_validation.jpg.png)
 
 
 #### JavaScript validation <a name="javascript-validation"></a>
