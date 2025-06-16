@@ -1,9 +1,11 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="en">
   <head>
+    {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Track your fishing trips and catch statistics with Fishing Log." />
+    <meta name="keywords" content="Fishing, Fishing Log, Trout, Pike, Fishing Journal" />
     <title>Fishing Log</title>
 
     <!-- Custom CSS -->
@@ -26,9 +28,9 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container-fluid">
         {% if user.is_authenticated %}
-          <a class="navbar-brand" href="{% url 'dashboard' %}">Fishing Log</a>
+        <a class="navbar-brand" href="{% url 'dashboard' %}">Fishing Log</a>
         {% else %}
-          <a class="navbar-brand" href="{% url 'home' %}">Fishing Log</a>
+        <a class="navbar-brand" href="{% url 'home' %}">Fishing Log</a>
         {% endif %}
         <button
           class="navbar-toggler"
@@ -47,7 +49,6 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'account_logout' %}">Log out</a>
             </li>
-
             {% else %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
@@ -80,19 +81,19 @@
       <div class="footer_content">
         <ul class="footer_nav">
           <li>
-            <a href="https://www.facebook.com/" target="_blank"
-              ><i class="fa-brands fa-square-facebook"></i
-            ></a>
+            <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook">
+              <i class="fa-brands fa-square-facebook"></i>
+            </a>
           </li>
           <li>
-            <a href="https://www.instagram.com/" target="_blank"
-              ><i class="fa-brands fa-square-instagram"></i
-            ></a>
+            <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram">
+              <i class="fa-brands fa-square-instagram"></i>
+            </a>
           </li>
           <li>
-            <a href="https://x.com/" target="_blank"
-              ><i class="fa-brands fa-square-x-twitter"></i
-            ></a>
+            <a href="https://x.com/" target="_blank" aria-label="Twitter">
+              <i class="fa-brands fa-square-x-twitter"></i>
+            </a>
           </li>
         </ul>
       </div>
@@ -100,7 +101,6 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Java script -->
     {% block extra_js %}{% endblock %}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{% static 'js/main.js' %}"></script>
