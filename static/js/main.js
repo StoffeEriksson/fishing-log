@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
   setupDynamicCatchForm();
 });
 
-/**Render a bar chart of total catches per species
- *
+/**
+ * Render a bar chart of total catches per species
  */
 function drawCatchChart(labels, data) {
   const ctx = document.getElementById("catchChart").getContext("2d");
@@ -66,6 +66,7 @@ function drawCatchChart(labels, data) {
     },
   });
 }
+
 /**
  * Render a line chart of total catches per month
  */
@@ -77,7 +78,7 @@ function drawMonthChart(labels, data) {
       labels: labels,
       datasets: [
         {
-          label: "Fångst per månad", // Swedish: Catch per month
+          label: "Catches per Month",
           data: data,
           fill: true,
           backgroundColor: "rgba(255,165,0,0.2)", // Light orange fill
@@ -110,7 +111,6 @@ function drawMonthChart(labels, data) {
 /**
  * Setup dynamic form for adding multiple catches in one session
  */
-//
 function setupDynamicCatchForm() {
   const addBtn = document.getElementById("add-catch");
   const speciesInput = document.getElementById("species-input");
@@ -127,16 +127,17 @@ function setupDynamicCatchForm() {
     !listContainer ||
     !formContainer ||
     !totalForms
-  )
+  ) {
     return;
+  }
 
   // When user clicks "Add" catch
   addBtn.addEventListener("click", () => {
     const species = speciesInput.value;
-    const count = parseInt(countInput.value);
+    const count = parseInt(countInput.value, 10);
     if (!species || isNaN(count) || count <= 0) return;
 
-    const index = parseInt(totalForms.value);
+    const index = parseInt(totalForms.value, 10);
     totalForms.value = index + 1;
 
     // Create visual preview of added catch
@@ -144,7 +145,7 @@ function setupDynamicCatchForm() {
     const wrapper = document.createElement("div");
     wrapper.className = "faded-catch mb-2";
     wrapper.innerHTML = `
-      <span>${displayName} – ${count} st</span>
+      <span>${displayName} – ${count} pcs</span>
       <button type="button" class="remove-catch btn btn-sm btn-danger ms-2">❌</button>
     `;
     listContainer.appendChild(wrapper);
@@ -167,7 +168,7 @@ function setupDynamicCatchForm() {
     speciesInput.selectedIndex = 0;
     countInput.value = "";
 
-    // When user clicks  remove this catch
+    // When user clicks remove this catch
     wrapper.querySelector(".remove-catch").addEventListener("click", () => {
       wrapper.remove();
       hiddenSpecies.remove();
