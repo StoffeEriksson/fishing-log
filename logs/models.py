@@ -13,6 +13,7 @@ FISH_SPECIES_CHOICES = [
     ('pike', 'Pike'),
     ('perch', 'Perch'),
     ('trout', 'Trout'),
+    ('zander', 'Zander'),
     ('salmon', 'Salmon'),
     ('roach', 'Roach'),
     ('tench', 'Tench'),

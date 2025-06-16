@@ -24,6 +24,7 @@
               <li>{{ catch.get_species_display }}: {{ catch.count }} st</li>
             {% endfor %}
           </ul>
+          <a href="{% url 'edit_fishing_session' session.id %}" class="btn btn-sm btn-outline-warning mt-2">Edit</a>
         </li>
       {% empty %}
         <li>No fishing sessions yet.</li>

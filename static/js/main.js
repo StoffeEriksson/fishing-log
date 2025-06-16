@@ -1,24 +1,30 @@
-// Auto-fade messages
+// Automatically fade out alert messages after 3 seconds
 setTimeout(() => {
   document.querySelectorAll(".custom-alert").forEach((alert) => {
     alert.style.opacity = "0";
-    setTimeout(() => alert.remove(), 500);
+    setTimeout(() => alert.remove(), 500); // Remove element after fade-out
   });
 }, 3000);
 
-// Shows statitics
+// When the page has loaded
 document.addEventListener("DOMContentLoaded", function () {
+  // If global variables for species chart exist, draw it
   if (window.speciesLabels && window.speciesCounts) {
     drawCatchChart(window.speciesLabels, window.speciesCounts);
   }
+
+  // If global variables for monthly chart exist, draw it
   if (window.monthLabels && window.monthCounts) {
     drawMonthChart(window.monthLabels, window.monthCounts);
   }
 
+  // Initialize the dynamic catch input logic
   setupDynamicCatchForm();
 });
 
-// Function to display the catch chart
+/**Render a bar chart of total catches per species
+ *
+ */
 function drawCatchChart(labels, data) {
   const ctx = document.getElementById("catchChart").getContext("2d");
   new Chart(ctx, {
@@ -28,7 +34,7 @@ function drawCatchChart(labels, data) {
       datasets: [
         {
           label: "Total Catches",
-          data: data.map((v) => Math.round(v)),
+          data: data.map((v) => Math.round(v)), // Round values for cleaner bars
           backgroundColor: "orange",
           borderColor: "darkorange",
           borderWidth: 2,
@@ -60,8 +66,9 @@ function drawCatchChart(labels, data) {
     },
   });
 }
-
-// Function to display monthly chart
+/**
+ * Render a line chart of total catches per month
+ */
 function drawMonthChart(labels, data) {
   const ctx = document.getElementById("monthChart").getContext("2d");
   new Chart(ctx, {
@@ -70,12 +77,12 @@ function drawMonthChart(labels, data) {
       labels: labels,
       datasets: [
         {
-          label: "Fångst per månad",
+          label: "Fångst per månad", // Swedish: Catch per month
           data: data,
           fill: true,
-          backgroundColor: "rgba(255,165,0,0.2)",
+          backgroundColor: "rgba(255,165,0,0.2)", // Light orange fill
           borderColor: "orange",
-          tension: 0.3,
+          tension: 0.3, // Smooth curve
         },
       ],
     },
@@ -100,15 +107,19 @@ function drawMonthChart(labels, data) {
   });
 }
 
-// Dynamic catch form
+/**
+ * Setup dynamic form for adding multiple catches in one session
+ */
+//
 function setupDynamicCatchForm() {
   const addBtn = document.getElementById("add-catch");
   const speciesInput = document.getElementById("species-input");
   const countInput = document.getElementById("count-input");
-  const listContainer = document.getElementById("catch-preview");
-  const formContainer = document.getElementById("catch-formset");
-  const totalForms = document.getElementById("id_form-TOTAL_FORMS");
+  const listContainer = document.getElementById("catch-preview"); // For visual preview
+  const formContainer = document.getElementById("catch-formset"); // For hidden inputs
+  const totalForms = document.getElementById("id_form-TOTAL_FORMS"); // Tracks how many forms exist
 
+  // Abort if any required element is missing
   if (
     !addBtn ||
     !speciesInput ||
@@ -119,6 +130,7 @@ function setupDynamicCatchForm() {
   )
     return;
 
+  // When user clicks "Add" catch
   addBtn.addEventListener("click", () => {
     const species = speciesInput.value;
     const count = parseInt(countInput.value);
@@ -127,7 +139,7 @@ function setupDynamicCatchForm() {
     const index = parseInt(totalForms.value);
     totalForms.value = index + 1;
 
-    // Shows the preview
+    // Create visual preview of added catch
     const displayName = speciesInput.options[speciesInput.selectedIndex].text;
     const wrapper = document.createElement("div");
     wrapper.className = "faded-catch mb-2";
@@ -137,7 +149,7 @@ function setupDynamicCatchForm() {
     `;
     listContainer.appendChild(wrapper);
 
-    // creates the hidden chart
+    // Create hidden inputs to submit with the form
     const hiddenSpecies = document.createElement("input");
     hiddenSpecies.type = "hidden";
     hiddenSpecies.name = `form-${index}-species`;
@@ -151,20 +163,22 @@ function setupDynamicCatchForm() {
     formContainer.appendChild(hiddenSpecies);
     formContainer.appendChild(hiddenCount);
 
-    // Clear inputs
+    // Clear input fields
     speciesInput.selectedIndex = 0;
     countInput.value = "";
 
-    // Removes catch
+    // When user clicks  remove this catch
     wrapper.querySelector(".remove-catch").addEventListener("click", () => {
       wrapper.remove();
       hiddenSpecies.remove();
       hiddenCount.remove();
-      updateFormCount();
+      updateFormCount(); // Update form count after removal
     });
   });
 
-  // Function updates form
+  /**
+   * Recalculate total number of catch forms based on remaining inputs
+   */
   function updateFormCount() {
     const inputs = formContainer.querySelectorAll('input[name$="-species"]');
     totalForms.value = inputs.length;

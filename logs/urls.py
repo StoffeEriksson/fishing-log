@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, dashboard, log_fish_session, session_list, session_stats, reset_stats, delete_account
+from .views import home, dashboard, log_fish_session, session_list, session_stats, reset_stats, delete_account, edit_fishing_session
 
 urlpatterns = [
     path('', home, name='home'),
@@ -9,5 +9,6 @@ urlpatterns = [
     path('stats/', session_stats, name='session_stats'),
     path('reset/', reset_stats, name='reset_stats'),
     path('accounts/delete/', delete_account, name='account_delete'),
+    path('sessions/<int:session_id>/edit/', edit_fishing_session, name='edit_fishing_session'),
     
 ]

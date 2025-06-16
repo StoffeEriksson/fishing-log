@@ -1,13 +1,14 @@
-/* Import google fonts */
+/* Import Google Fonts for header text */
 @import url("https://fonts.googleapis.com/css2?family=Edu+SA+Hand:wght@400..700&display=swap");
 
-/* Global styles */
+/* Global reset to remove default margins, paddings, and borders */
 * {
   padding: 0;
   margin: 0;
   border: none;
 }
 
+/* Main body layout and background image */
 body {
   display: flex;
   flex-direction: column;
@@ -22,21 +23,27 @@ body {
   font-family: sans-serif;
 }
 
+/* Main container with top padding to clear the fixed navbar */
 main {
   flex: 1;
   background-color: transparent;
+  padding-top: 80px;
 }
 
+/* Headers use the imported Google font */
 h1,
 h2 {
   font-family: "Edu SA Hand", cursive;
 }
 
-/* Navbar syles in base.html */
+/* ------------------- NAVBAR ------------------- */
+
+/* Navbar base color */
 .navbar {
   background-color: black;
 }
 
+/* Navbar links and branding */
 .navbar .nav-link {
   color: orange;
 }
@@ -45,15 +52,18 @@ h2 {
   color: orange;
 }
 
+/* Navbar toggle button styling (for mobile) */
 .navbar-toggler {
   border-color: orange;
 }
 
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='orange' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml..."); /* Custom orange hamburger icon */
 }
 
-/* Footer in the base.html style */
+/* ------------------- FOOTER ------------------- */
+
+/* Fixed bottom footer */
 .main_footer {
   background-color: black;
   position: fixed;
@@ -65,6 +75,7 @@ h2 {
   box-sizing: border-box;
 }
 
+/* Footer layout */
 .footer_content {
   display: flex;
   justify-content: space-between;
@@ -73,6 +84,7 @@ h2 {
   width: 100%;
 }
 
+/* Centered footer icons */
 .footer_nav {
   position: absolute;
   left: 50%;
@@ -95,26 +107,26 @@ h2 {
   color: white;
 }
 
-/* Home.html page */
+/* ------------------- HOME PAGE ------------------- */
+
+/* Main container for home and other pages */
 .custom_container {
   display: flex;
   flex-direction: column;
   gap: 100px;
   align-items: center;
-  
 }
 
+/* Generic card layout */
 .card_content {
   background-color: transparent;
   color: white;
-  padding: 2rem;
+  padding: 3rem 2rem;
   width: 100%;
   max-width: 700px;
   margin: 2rem auto;
   margin-top: 50px;
   text-align: center;
-  color: white;
-  padding: 3rem 2rem;
 }
 
 .card_content h1,
@@ -122,6 +134,7 @@ h2 {
   margin-bottom: 2rem;
 }
 
+/* Subtitle text styling */
 .sub_text {
   padding-top: 25px;
 }
@@ -130,28 +143,21 @@ h2 {
   font-size: 25px;
 }
 
+/* Remove bullet points from card content lists */
 .card_content ul {
   margin-top: 1.5rem;
   padding-left: 0;
   list-style: none;
 }
 
+/* Button spacing inside card */
 .card_content .btn {
   margin-top: 1rem;
 }
 
-/* Moves last card above the footer */
-#bottom_card {
-  margin-bottom: 250px;
-}
+/* ------------------- BUTTONS ------------------- */
 
-.hero_text {
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-}
-
-/* Buttons */
+/* Orange outlined button with white text */
 .btn-orange {
   border: 3px solid orange !important;
   color: white !important;
@@ -162,7 +168,8 @@ h2 {
   border-color: darkorange !important;
 }
 
-/* Login.html */
+/* ------------------- LOGIN PAGE ------------------- */
+
 .login-wrapper {
   min-height: calc(100vh - 56px);
   display: flex;
@@ -185,7 +192,7 @@ h2 {
 .login-title {
   font-size: 2rem;
   margin-bottom: 1rem;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .login-sub {
@@ -194,8 +201,9 @@ h2 {
   color: #f0f0f0;
 }
 
+/* ------------------- FLASH MESSAGES ------------------- */
 
-/* Costum messages */
+/* Container for Django's flash messages */
 .custom-messages {
   position: fixed;
   top: 20px;
@@ -206,6 +214,7 @@ h2 {
   max-width: 700px;
 }
 
+/* Style for each flash message */
 .custom-alert {
   background-color: rgba(0, 0, 0, 0.75);
   color: #fff;
@@ -219,7 +228,8 @@ h2 {
   transition: opacity 0.5s ease-out;
 }
 
-/* Dashboard.html page */
+/* ------------------- DASHBOARD ------------------- */
+
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -228,6 +238,7 @@ h2 {
   padding: 4rem 1rem;
 }
 
+/* Individual stat blocks */
 .dashboard-section {
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 12px;
@@ -249,7 +260,9 @@ h2 {
   margin-bottom: 1.5rem;
 }
 
-/* session_list */
+/* ------------------- SESSION LIST ------------------- */
+
+/* Session history list */
 .session-list {
   list-style: none;
   padding: 0;
@@ -258,13 +271,14 @@ h2 {
 
 .session-list li {
   padding: 0.75rem;
-  background-color: rgba(255,255,255,0.05);
+  background-color: rgba(255, 255, 255, 0.05);
   margin-bottom: 0.5rem;
   border-left: 4px solid orange;
   border-radius: 6px;
 }
 
-/* Signup form */
+/* ------------------- SIGNUP FORM ------------------- */
+
 .form-wrapper {
   display: flex;
   justify-content: center;
@@ -274,14 +288,14 @@ h2 {
 }
 
 .card-content {
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 2rem;
   border-radius: 1rem;
   width: 100%;
   max-width: 450px;
   text-align: center;
   color: white;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
 .form-title {
@@ -319,8 +333,9 @@ h2 {
   margin-bottom: 1.5rem;
 }
 
+/* ------------------- CATCH FORM ------------------- */
 
-
+/* Style for each dynamically added catch */
 .faded-catch {
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
@@ -332,6 +347,8 @@ h2 {
   justify-content: space-between;
   align-items: center;
 }
+
+/* Delete button in dynamic catch */
 .faded-catch button.remove-catch {
   background: none;
   border: none;
@@ -339,6 +356,7 @@ h2 {
   font-size: 1.2rem;
   cursor: pointer;
 }
+
 .faded-catch button.remove-catch:hover {
   color: red;
 }
